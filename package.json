@@ -15,6 +15,9 @@
     "electron": "^28.0.0",
     "electron-builder": "^24.6.4"
   },
+  "dependencies": {
+    "electron-updater": "^6.8.3"
+  },
   "build": {
     "appId": "com.portopay.app",
     "productName": "PortoPay",
@@ -34,9 +37,14 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "PortoPay"
-    }
-  },
-  "dependencies": {
-    "electron-updater": "^6.8.3"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Matheusbriporto",
+        "repo": "portopay",
+        "releaseType": "release"
+      }
+    ]
   }
 }
