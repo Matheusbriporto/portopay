@@ -1,54 +1,81 @@
-// Logout
+// ===================================================
+// WINDOW CONTROLS
+// ===================================================
+const logoutButton = document.querySelector(".topbar button");
+
 function logout() {
-    localStorage.removeItem("loggedUser");
+    // Fecha a overview e volta para login
     window.location.href = "login.html";
 }
 
-// Preencher números e extrato de teste
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("saldo").textContent = "R$ 5.200";
-    document.getElementById("entradasHoje").textContent = "R$ 1.200";
-    document.getElementById("saidasHoje").textContent = "R$ 450";
-    document.getElementById("totalMes").textContent = "R$ 12.500";
+// ===================================================
+// SAMPLE DASHBOARD DATA (substitua pelos dados reais)
+// ===================================================
+const saldo = document.getElementById("saldo");
+const entradasHoje = document.getElementById("entradasHoje");
+const saidasHoje = document.getElementById("saidasHoje");
+const totalMes = document.getElementById("totalMes");
+const extratoList = document.getElementById("extratoList");
 
-    const extratoList = document.getElementById("extratoList");
-    const extratoItens = [
-        {descricao: "Aluguel", valor: "- R$ 1.200"},
-        {descricao: "Freelance", valor: "+ R$ 2.000"},
-        {descricao: "Supermercado", valor: "- R$ 350"},
-        {descricao: "Investimento", valor: "+ R$ 1.000"}
-    ];
+// Dados fictícios
+const extratos = [
+    { descricao: "Compra A", valor: -50, hora: "09:30" },
+    { descricao: "Venda B", valor: 120, hora: "10:15" },
+    { descricao: "Pagamento C", valor: -30, hora: "11:00" },
+];
 
-    extratoItens.forEach(item => {
-        const div = document.createElement("div");
-        div.classList.add("extrato-item-vertical");
-        div.innerHTML = `<p>${item.descricao}</p><p>${item.valor}</p>`;
-        extratoList.appendChild(div);
-    });
+// Atualiza cards
+saldo.innerText = "1500";
+entradasHoje.innerText = "300";
+saidasHoje.innerText = "180";
+totalMes.innerText = "3200";
 
-    // Mini gráfico animado
-    const ctx = document.getElementById("miniChart").getContext("2d");
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan','Fev','Mar','Abr','Mai','Jun'],
-            datasets: [{
-                label: 'Saldo',
-                data: [5000, 5500, 6000, 5800, 6200, 6500],
-                borderColor: '#ff7a00',
-                backgroundColor: 'rgba(255,122,0,0.1)',
-                tension: 0.4,
-                fill: true,
-            }]
-        },
-        options: {
-            plugins: { legend: { display: false } },
-            responsive: true,
-            animation: { duration: 1000 },
-            scales: {
-                y: { beginAtZero: false, display: false },
-                x: { display: false }
-            }
-        }
-    });
+// Atualiza extrato
+extratoList.innerHTML = "";
+extratos.forEach(e => {
+    const div = document.createElement("div");
+    div.classList.add("extrato-item-vertical");
+    div.innerHTML = `<p>${e.hora} - ${e.descricao}</p><p>${e.valor < 0 ? '-' : '+'} R$ ${Math.abs(e.valor)}</p>`;
+    extratoList.appendChild(div);
 });
+
+// ===================================================
+// MINI CHART (Chart.js)
+// ===================================================
+const ctx = document.getElementById("miniChart").getContext("2d");
+const miniChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+        datasets: [{
+            label: 'Saldo Mensal',
+            data: [1200, 1500, 1300, 1600],
+            borderColor: '#ff7a00',
+            backgroundColor: 'rgba(255,122,0,0.2)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+// ===================================================
+// WINDOW BUTTONS - via preload.js
+// ===================================================
+const windowControls = {
+    close: () => window.api.close(),
+    minimize: () => window.api.minimize(),
+    maximize: () => window.api.maximize()
+};
+
+document.querySelector(".window-btn.close").onclick = windowControls.close;
+document.querySelector(".window-btn.minimize").onclick = windowControls.minimize;
+document.querySelector(".window-btn.maximize").onclick = windowControls.maximize;

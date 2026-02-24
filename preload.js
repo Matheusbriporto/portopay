@@ -1,8 +1,7 @@
-const { contextBridge, ipcRenderer } = require("electron")
+const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("api", {
-  minimize: () => ipcRenderer.send("minimize"),
-  maximize: () => ipcRenderer.send("maximize"),
-  close: () => ipcRenderer.send("close"),
-  openOverview: () => ipcRenderer.send("open-overview") // NOVO: abre o overview
-})
+    minimize: () => ipcRenderer.send("minimize-window"),
+    maximize: () => ipcRenderer.send("maximize-window"),
+    close: () => ipcRenderer.send("close-window")
+});

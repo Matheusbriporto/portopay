@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PortoPay</title>
+<title>PortoPay - Login</title>
 <link rel="stylesheet" href="login.css">
 </head>
-
 <body>
 
-<!-- Área Drag -->
+<!-- Área Drag para arrastar a janela -->
 <div class="drag-area"></div>
 
-<!-- Botões customizados -->
+<!-- Botões customizados de janela -->
 <div class="mac-controls">
-  <div class="mac-btn close" id="close-btn"></div>
-  <div class="mac-btn minimize" id="minimize-btn"></div>
-  <div class="mac-btn maximize" id="maximize-btn"></div>
+  <div class="mac-btn close" onclick="window.api.close()"></div>
+  <div class="mac-btn minimize" onclick="window.api.minimize()"></div>
+  <div class="mac-btn maximize" onclick="window.api.maximize()"></div>
 </div>
 
+<!-- Container do login -->
 <div class="login-wrapper">
   <div class="login-container">
 
@@ -29,40 +29,13 @@
 
       <input type="text" id="username" placeholder="Usuário">
       <input type="password" id="password" placeholder="Senha">
-      <button id="loginBtn">Entrar</button>
+      <button onclick="login()">Entrar</button>
 
       <p id="error-message"></p>
 
   </div>
 </div>
 
-<script>
-  // Botões da janela
-  const closeBtn = document.getElementById("close-btn");
-  const minimizeBtn = document.getElementById("minimize-btn");
-  const maximizeBtn = document.getElementById("maximize-btn");
-
-  closeBtn.addEventListener("click", () => window.electronAPI.closeWindow());
-  minimizeBtn.addEventListener("click", () => window.electronAPI.minimizeWindow());
-  maximizeBtn.addEventListener("click", () => window.electronAPI.maximizeWindow());
-
-  // Função de login
-  const loginBtn = document.getElementById("loginBtn");
-  loginBtn.addEventListener("click", () => {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const errorMsg = document.getElementById("error-message");
-
-    if (!username || !password) {
-      errorMsg.innerText = "Preencha usuário e senha";
-      return;
-    }
-
-    // Aqui você pode colocar validação real
-    // Se estiver ok, abre overview.html
-    window.location = "overview.html";
-  });
-</script>
-
+<script src="login.js"></script>
 </body>
 </html>
