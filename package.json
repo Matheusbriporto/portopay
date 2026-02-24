@@ -1,6 +1,6 @@
 {
   "name": "portopay",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "PortoPay - Sistema de Controle Financeiro",
   "main": "main.js",
   "author": "Matheus",
