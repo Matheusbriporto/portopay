@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PortoPay</title>
+<link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+<!-- Área Drag -->
+<div class="drag-area"></div>
+
+<!-- Botões Mac -->
+<div class="mac-controls">
+  <div class="mac-btn close" onclick="window.api.close()"></div>
+  <div class="mac-btn minimize" onclick="window.api.minimize()"></div>
+  <div class="mac-btn maximize" onclick="window.api.maximize()"></div>
+</div>
+
+<div class="login-wrapper">
+  <div class="login-container">
+
+      <img src="assets/logo.png" class="logo">
+
+      <h2>Porto<span>Pay</span></h2>
+      <p>Faça login para continuar</p>
+
+      <input type="text" id="username" placeholder="Usuário">
+      <input type="password" id="password" placeholder="Senha">
+      <button onclick="login()">Entrar</button>
+
+      <p id="error-message"></p>
+
+  </div>
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>
