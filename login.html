@@ -8,14 +8,14 @@
 </head>
 <body>
 
-<!-- Área Drag para arrastar a janela -->
+<!-- Área arrastável -->
 <div class="drag-area"></div>
 
-<!-- Botões customizados de janela -->
-<div class="mac-controls">
-  <div class="mac-btn close" onclick="window.api.close()"></div>
-  <div class="mac-btn minimize" onclick="window.api.minimize()"></div>
-  <div class="mac-btn maximize" onclick="window.api.maximize()"></div>
+<!-- Botões de janela customizados -->
+<div class="window-controls">
+  <div class="window-btn close"></div>
+  <div class="window-btn minimize"></div>
+  <div class="window-btn maximize"></div>
 </div>
 
 <!-- Container do login -->
@@ -37,5 +37,11 @@
 </div>
 
 <script src="login.js"></script>
+<script>
+  // Botões de janela funcionando via preload.js
+  document.querySelector(".window-btn.close").addEventListener("click", () => window.api.close());
+  document.querySelector(".window-btn.minimize").addEventListener("click", () => window.api.minimize());
+  document.querySelector(".window-btn.maximize").addEventListener("click", () => window.api.maximize());
+</script>
 </body>
 </html>

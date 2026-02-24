@@ -1,20 +1,23 @@
 function login() {
-    const user = document.getElementById("username").value
-    const pass = document.getElementById("password").value
-    const error = document.getElementById("error-message")
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+    const error = document.getElementById("error-message");
 
-    // Aqui você define seu usuário e senha corretos
-    if (user === "Matheus" && pass === "Noah0210.") {
-        error.style.color = "#28c840"
-        error.innerText = "Login realizado com sucesso 🚀"
+    // Simulação de usuários e senhas
+    const users = {
+        "Matheus": "Noah0210.",
+        "Joana": "Senha123",
+        "Pedro": "abc123"
+    };
 
-        // Pequeno delay para mostrar mensagem antes de abrir o overview
-        setTimeout(() => {
-            window.location.href = "overview.html"
-        }, 800)
+    if (users[user] && users[user] === pass) {
+        error.style.color = "#28c840";
+        error.innerText = "Login realizado com sucesso 🚀";
 
+        // Abrir a tela de overview passando o nome do usuário
+        window.api.openOverview(user);
     } else {
-        error.style.color = "#ff5f57"
-        error.innerText = "Usuário ou senha inválidos"
+        error.style.color = "#ff5f57";
+        error.innerText = "Usuário ou senha inválidos";
     }
 }

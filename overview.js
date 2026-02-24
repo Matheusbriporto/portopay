@@ -8,6 +8,18 @@ function logout() {
     window.location.href = "login.html";
 }
 
+logoutButton?.addEventListener("click", logout);
+
+// ===================================================
+// USERNAME DYNAMIC
+// ===================================================
+const welcomeEl = document.getElementById("welcome");
+
+// Recebe o nome do usuário via preload.js
+window.api.onUserName((username) => {
+    welcomeEl.innerText = `Olá, ${username}`;
+});
+
 // ===================================================
 // SAMPLE DASHBOARD DATA (substitua pelos dados reais)
 // ===================================================
@@ -42,40 +54,42 @@ extratos.forEach(e => {
 // ===================================================
 // MINI CHART (Chart.js)
 // ===================================================
-const ctx = document.getElementById("miniChart").getContext("2d");
-const miniChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
-        datasets: [{
-            label: 'Saldo Mensal',
-            data: [1200, 1500, 1300, 1600],
-            borderColor: '#ff7a00',
-            backgroundColor: 'rgba(255,122,0,0.2)',
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: false }
+const ctx = document.getElementById("miniChart")?.getContext("2d");
+if (ctx) {
+    const miniChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+            datasets: [{
+                label: 'Saldo Mensal',
+                data: [1200, 1500, 1300, 1600],
+                borderColor: '#ff7a00',
+                backgroundColor: 'rgba(255,122,0,0.2)',
+                fill: true,
+                tension: 0.4
+            }]
         },
-        scales: {
-            y: { beginAtZero: true }
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
         }
-    }
-});
+    });
+}
 
 // ===================================================
 // WINDOW BUTTONS - via preload.js
 // ===================================================
-const windowControls = {
-    close: () => window.api.close(),
-    minimize: () => window.api.minimize(),
-    maximize: () => window.api.maximize()
-};
+document.querySelector(".window-btn.close")?.addEventListener("click", () => window.api.close());
+document.querySelector(".window-btn.minimize")?.addEventListener("click", () => window.api.minimize());
+document.querySelector(".window-btn.maximize")?.addEventListener("click", () => window.api.maximize());
 
-document.querySelector(".window-btn.close").onclick = windowControls.close;
-document.querySelector(".window-btn.minimize").onclick = windowControls.minimize;
-document.querySelector(".window-btn.maximize").onclick = windowControls.maximize;
+// ===================================================
+// AUTO-UPDATER POPUP
+// ===================================================
+window.api.onUpdateAvailable((version) => {
+    if (confirm(`Nova versão ${version} disponível! Deseja atualizar agora?`)) {
+        // Abre link do release no GitHub
+        window.api.openUpdateLink();
+    }
+});

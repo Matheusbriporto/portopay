@@ -1,102 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PortoPay - Overview</title>
-    <link rel="stylesheet" href="overview.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<title>PortoPay - Overview</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <!-- Área arrastável -->
-    <div class="drag-area"></div>
+<!-- Área Drag -->
+<div class="drag-area"></div>
 
-    <!-- Botões da janela -->
-    <div class="window-controls">
-        <div class="window-btn close" onclick="window.api.close()"></div>
-        <div class="window-btn minimize" onclick="window.api.minimize()"></div>
-        <div class="window-btn maximize" onclick="window.api.maximize()"></div>
-    </div>
+<!-- Botões de janela -->
+<div class="window-controls">
+    <div class="window-btn close"></div>
+    <div class="window-btn minimize"></div>
+    <div class="window-btn maximize"></div>
+</div>
 
-    <div class="layout">
+<div class="layout">
 
-        <!-- Sidebar minimalista -->
-        <aside class="sidebar-minimal">
-            <ul>
-                <li title="Overview"><i class="ri-dashboard-line"></i></li>
-                <li title="Transações"><i class="ri-exchange-dollar-line"></i></li>
-                <li title="Relatórios"><i class="ri-pie-chart-line"></i></li>
-                <li title="Configurações"><i class="ri-settings-3-line"></i></li>
-            </ul>
-        </aside>
+    <!-- Sidebar minimalista -->
+    <aside class="sidebar-minimal">
+        <ul>
+            <li title="Overview"><i class="ri-dashboard-line"></i></li>
+            <li title="Transações"><i class="ri-exchange-dollar-line"></i></li>
+            <li title="Relatórios"><i class="ri-pie-chart-line"></i></li>
+            <li title="Configurações"><i class="ri-settings-3-line"></i></li>
+        </ul>
+    </aside>
 
-        <!-- Conteúdo principal -->
-        <main class="main-content">
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        <header class="topbar">
+            <h1 id="welcome">Olá, Usuário</h1>
+            <button onclick="logout()">Sair</button>
+        </header>
 
-            <!-- Topbar -->
-            <header class="topbar">
-                <h1 id="welcome">Olá, Admin</h1>
-                <button onclick="logout()">Sair</button>
-            </header>
+        <div class="dashboard-grid">
 
-            <!-- Área principal dividida em duas colunas -->
-            <div class="dashboard-grid">
-
-                <!-- Coluna esquerda: cards e gráfico -->
-                <div class="left-panel">
-                    <!-- Cards principais -->
-                    <section class="cards">
-                        <div class="card">
-                            <div class="card-icon orange"><i class="ri-wallet-3-line"></i></div>
-                            <div>
-                                <h4>Saldo Atual</h4>
-                                <p class="number" id="saldo">0</p>
-                            </div>
+            <div class="left-panel">
+                <section class="cards">
+                    <div class="card">
+                        <div class="card-icon orange"><i class="ri-wallet-3-line"></i></div>
+                        <div>
+                            <h4>Saldo Atual</h4>
+                            <p class="number" id="saldo">0</p>
                         </div>
-                        <div class="card">
-                            <div class="card-icon"><i class="ri-arrow-down-line"></i></div>
-                            <div>
-                                <h4>Entradas Hoje</h4>
-                                <p class="number" id="entradasHoje">0</p>
-                            </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="ri-arrow-down-line"></i></div>
+                        <div>
+                            <h4>Entradas Hoje</h4>
+                            <p class="number" id="entradasHoje">0</p>
                         </div>
-                        <div class="card">
-                            <div class="card-icon"><i class="ri-arrow-up-line"></i></div>
-                            <div>
-                                <h4>Saídas Hoje</h4>
-                                <p class="number" id="saidasHoje">0</p>
-                            </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="ri-arrow-up-line"></i></div>
+                        <div>
+                            <h4>Saídas Hoje</h4>
+                            <p class="number" id="saidasHoje">0</p>
                         </div>
-                        <div class="card">
-                            <div class="card-icon orange"><i class="ri-calendar-line"></i></div>
-                            <div>
-                                <h4>Total do Mês</h4>
-                                <p class="number" id="totalMes">0</p>
-                            </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon orange"><i class="ri-calendar-line"></i></div>
+                        <div>
+                            <h4>Total do Mês</h4>
+                            <p class="number" id="totalMes">0</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <!-- Mini gráfico -->
-                    <section class="mini-chart-container">
-                        <h3>Resumo do Mês</h3>
-                        <canvas id="miniChart" height="150"></canvas>
-                    </section>
-                </div>
-
-                <!-- Coluna direita: extrato -->
-                <div class="right-panel">
-                    <section class="extrato">
-                        <h3>Extrato do Dia</h3>
-                        <div class="extrato-list" id="extratoList"></div>
-                    </section>
-                </div>
-
+                <section class="mini-chart-container">
+                    <h3>Resumo do Mês</h3>
+                    <canvas id="miniChart" height="150"></canvas>
+                </section>
             </div>
-        </main>
 
-    </div>
+            <div class="right-panel">
+                <section class="extrato">
+                    <h3>Extrato do Dia</h3>
+                    <div class="extrato-list" id="extratoList"></div>
+                </section>
+            </div>
+
+        </div>
+    </main>
+
+</div>
 
 <script src="overview.js"></script>
 </body>

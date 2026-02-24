@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
 
@@ -33,8 +33,6 @@ function createWindow() {
 // === APP READY ===
 app.whenReady().then(() => {
     createWindow();
-
-    // Verifica atualizações ao iniciar
     autoUpdater.checkForUpdatesAndNotify();
 });
 
@@ -70,6 +68,56 @@ ipcMain.on("close-window", () => {
 });
 
 ipcMain.on("restart-app", () => autoUpdater.quitAndInstall());
+
+// === IPC EVENTS - ABRIR TELAS ===
+ipcMain.on("open-overview", (event, username) => {
+    const overviewWindow = new BrowserWindow({
+        width: 1200,
+        height: 750,
+        minWidth: 900,
+        minHeight: 600,
+        frame: false,
+        transparent: true,
+        roundedCorners: true,
+        vibrancy: "under-window",
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true,
+            nodeIntegration: false,
+        },
+    });
+
+    overviewWindow.loadFile("overview.html");
+
+    overviewWindow.webContents.on("did-finish-load", () => {
+        overviewWindow.webContents.send("userName", username);
+    });
+});
+
+ipcMain.on("open-user-registration", () => {
+    const userRegWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        minWidth: 700,
+        minHeight: 500,
+        frame: false,
+        transparent: true,
+        roundedCorners: true,
+        vibrancy: "under-window",
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+            contextIsolation: true,
+            nodeIntegration: false,
+        },
+    });
+
+    userRegWindow.loadFile("user-registration.html");
+});
+
+// === IPC EVENT - ABRIR LINK DE ATUALIZAÇÃO ===
+ipcMain.on("open-update-link", () => {
+    shell.openExternal("https://github.com/Matheusbriporto/portopay/releases");
+});
 
 // === MAC SPECIFIC ===
 app.on("window-all-closed", () => { 
