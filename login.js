@@ -3,7 +3,7 @@ function login() {
   const pass = document.getElementById("password").value
   const error = document.getElementById("error-message")
 
-  if (user === "admin" && pass === "1234") {
+  if (user === "matheus" && pass === "Noah0225") {
     error.style.color = "#28c840"
     error.innerText = "Login realizado com sucesso 🚀"
   } else {
