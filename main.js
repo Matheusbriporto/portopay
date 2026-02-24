@@ -10,11 +10,12 @@ function createWindow() {
     height: 700,
     minWidth: 900,
     minHeight: 600,
-    frame: false,
-    transparent: true,
-    vibrancy: "under-window", // efeito glass no Mac
-    backgroundColor: "#00000000", // fundo transparente
-    titleBarStyle: "hidden",
+    frame: false,                // sem borda nativa
+    transparent: true,           // necessário para cantos arredondados
+    roundedCorners: true,        // funciona no Windows 11
+    vibrancy: "under-window",    // efeito glass no Mac
+    backgroundColor: "#00000000",// transparente
+    titleBarStyle: "hidden",     // esconde barra de título
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -24,6 +25,10 @@ function createWindow() {
 
   mainWindow.loadFile("login.html")
 
+  // Opcional: remove a sombra quadrada no Windows
+  mainWindow.setMinimumSize(900, 600)
+  mainWindow.setVisualEffectState("active") // Mac: efeito glass
+
   mainWindow.on("closed", () => {
     mainWindow = null
   })
@@ -32,8 +37,6 @@ function createWindow() {
 // === APP READY ===
 app.whenReady().then(() => {
   createWindow()
-
-  // Verifica atualizações ao iniciar
   autoUpdater.checkForUpdatesAndNotify()
 })
 
@@ -61,7 +64,6 @@ autoUpdater.on("download-progress", (progressObj) => {
 
 autoUpdater.on("update-downloaded", (info) => {
   console.log("Atualização baixada:", info.version)
-  // Envia para o renderer para mostrar botão de reiniciar
   mainWindow.webContents.send("updateReady")
 })
 
